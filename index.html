@@ -4,12 +4,10 @@ const uniqueKey = location.pathname.replaceAll("/", "_");
 // 重写本地存储，自动加仓库前缀
 const originSet = localStorage.setItem;
 localStorage.setItem = function(key, val) {
-  originSet(uniqueKey + "_" + key, val);
-};
+  originSet(uniqueKey + "_" + key, val);};
 const originGet = localStorage.getItem;
 localStorage.getItem = function(key) {
-  return originGet(uniqueKey + "_" + key);
-};
+  return originGet(uniqueKey + "_" + key);};
 // Cookie 自动绑定当前路径，跨仓库无法读取
 document.cookie = `site_mark=${uniqueKey}; path=${location.pathname}; SameSite=Lax`;
 </script>
