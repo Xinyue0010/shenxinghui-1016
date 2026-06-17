@@ -1,3 +1,18 @@
+<script>
+// 读取当前仓库路径作为唯一标识，隔离存储
+const uniqueKey = location.pathname.replaceAll("/", "_");
+// 重写本地存储，自动加仓库前缀
+const originSet = localStorage.setItem;
+localStorage.setItem = function(key, val) {
+  originSet(uniqueKey + "_" + key, val);
+};
+const originGet = localStorage.getItem;
+localStorage.getItem = function(key) {
+  return originGet(uniqueKey + "_" + key);
+};
+// Cookie 自动绑定当前路径，跨仓库无法读取
+document.cookie = `site_mark=${uniqueKey}; path=${location.pathname}; SameSite=Lax`;
+</script>
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" data-color-theme="black-white">
 <head>
